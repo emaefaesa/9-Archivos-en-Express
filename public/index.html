@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gallery-item {
+            margin: 10px;
+        }
+
+        .gallery-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+
+    <form action="/subir" method="post" enctype="multipart/form-data">
+        <input type="file" name="archivo" id="archivo">
+        <button type="submit">Subir</button>
+    </form>
+
+    <div id="gallery"></div>
+
+    <script>
+        fetch('/imagenes').then(res => res.json()).then(data => {
+            let salida = ''
+            data.results.forEach(image => {
+                salida += `<div class="gallery-item"><button onclick="window.location.href='${image.url}'" download="${image.name}"><img src="${image.url}" alt="${image.name}"></button>
+</div>`
+            });
+            document.getElementById('gallery').innerHTML = salida
+        })
+    </script>
+</body>
+
+</html>
